@@ -1,32 +1,35 @@
 """1) Implement convolution of two sequences of length K and M (K ≥ M) using python. (Do not use
  available library function for convolution.). Use the program to compute [1 2 3] ∗ [1 1 1 1]."""
    
-  
 import numpy as np
 import matplotlib.pyplot as plt
+#impulse response
+h = [1,1,1,1];
+#input response
+x = [1,2,3];
 def dirconv(x,h):
-   k=len(x)
-   m=len(h)
-   print(m)
-   print(k)
-   l=k+m-1
-   y=np.zeros(l)
-   for i in range(0,k-1):
-       s=0
-       for j in range(0,m):
-           s=s+np.dot(x[i+j],h[m-j-1])
-       y[i+1]=s
-    y[l-1]=np.dot(h[1],x[k-1])
-    y[0]=np.dot(x[0],h[0])
+    N1 = len(x)
+    N2 = len(h)
+    N = N1+N2-1
+    y = np.zeros(N)
+    m = N-N1
+    n = N-N2
+#Padding zeros to x and h to make their length to N
+    x =np.pad(x,(0,m),'constant')
+    h =np.pad(h,(0,n),'constant')
+
+#Linear convolution using convolution sum formula
+    for n in range (N):
+        for k in range (N):
+            if n >= k:
+               y[n] = y[n]+x[n-k]*h[k]
     return y
-x=np.random.randint(1,4,4)
-h=np.random.randint(1,4,2)
 y=dirconv(x,h)
-print("Convolution sum=",y)
-n=np.arange(len(y))
+print('Linear convolution using convolution sum formula output response y =\n',y)
 plt.title("linear convolution")
+n=np.arange(len(y))
 plt.xlabel('n')
 plt.ylabel('y[n]')
 plt.stem(n,y)
 plt.xticks(n)
-plt.show()
+plt.show()         
