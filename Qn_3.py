@@ -6,8 +6,7 @@ Normalized cut-off frequency, ωc = 0.2
 The sampling frequency Fs = 200Hz. You may use Hamming window with parameter a whose
 equation is given below:
 
-wH[n] = a − (1 − a) cos(2 pi n/M)
-, 0 ≤ n ≤ M.
+wH[n] = a − (1 − a) cos(2 pi n/M), 0 ≤ n ≤ M.
 
 Use the program to simulate filtering of x(t) = sin(20πt) + cos(30πt) + sin(80πt). Plot magnitude
 spectrum of both x(t) and filtered output y(t) showing analog frequency on the X-axis. You may
@@ -29,7 +28,7 @@ def hamming(M):
        raise Exception('M must be odd')
     return (a - (1-a)*np.cos(2*np.pi*np.arange(M + 1)/M))
 
-def build_filter(M, fc, window=None):
+def build_filter(M, fc, window):
     if window is None:
        h = sinc_filter(M, fc)
     else:
